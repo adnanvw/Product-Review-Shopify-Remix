@@ -1,0 +1,28 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+name = "product-reviews"
+client_id = "28217eb04b6fbc3ecc9564e3404bd6a5"
+application_url = "https://heroes-athletics-mutual-mothers.trycloudflare.com"
+embedded = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://heroes-athletics-mutual-mothers.trycloudflare.com/auth/callback",
+  "https://heroes-athletics-mutual-mothers.trycloudflare.com/auth/shopify/callback",
+  "https://heroes-athletics-mutual-mothers.trycloudflare.com/api/auth/callback",
+  "https://heroes-athletics-mutual-mothers.trycloudflare.com/.shopify/graphiql/auth/callback"
+]
+
+[webhooks]
+api_version = "2023-10"
+
+[pos]
+embedded = false
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "pritam-test-store-440.myshopify.com"
