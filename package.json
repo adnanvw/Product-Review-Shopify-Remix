@@ -30,6 +30,7 @@
     "@shopify/shopify-app-remix": "^2.1.0",
     "@shopify/shopify-app-session-storage-mongodb": "^2.0.1",
     "@shopify/shopify-app-session-storage-prisma": "^2.0.0",
+    "axios": "^1.6.2",
     "bootstrap": "^5.3.2",
     "isbot": "latest",
     "mongoose": "^8.0.2",

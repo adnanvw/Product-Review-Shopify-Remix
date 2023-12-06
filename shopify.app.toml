@@ -2,19 +2,19 @@
 
 name = "product-reviews"
 client_id = "28217eb04b6fbc3ecc9564e3404bd6a5"
-application_url = "https://heroes-athletics-mutual-mothers.trycloudflare.com"
+application_url = "https://euros-isle-dna-singh.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "write_products,read_customers"
 
 [auth]
 redirect_urls = [
-  "https://heroes-athletics-mutual-mothers.trycloudflare.com/auth/callback",
-  "https://heroes-athletics-mutual-mothers.trycloudflare.com/auth/shopify/callback",
-  "https://heroes-athletics-mutual-mothers.trycloudflare.com/api/auth/callback",
-  "https://heroes-athletics-mutual-mothers.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://euros-isle-dna-singh.trycloudflare.com/auth/callback",
+  "https://euros-isle-dna-singh.trycloudflare.com/auth/shopify/callback",
+  "https://euros-isle-dna-singh.trycloudflare.com/api/auth/callback",
+  "https://euros-isle-dna-singh.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

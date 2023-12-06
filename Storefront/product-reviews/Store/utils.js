@@ -3,6 +3,7 @@ import state from "./store";
 
 
 export const showAddReview=()=>{
+    console.log("jkljkl")
     state.addReview={
         open:true
     }
