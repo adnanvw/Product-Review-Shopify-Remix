@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useSnapshot } from "valtio"
 import state from "../Store/store"
-import { hideAddReview } from "../Store/utils"
+import { hideAddReview, hideLoader, showLoader, showToast } from "../Store/utils"
 
-const AddReviewModal = () => {
+const AddReviewModal = ({setRefresh,refresh}) => {
 
   const [rating, setRating] = useState(0);
 
@@ -25,10 +25,15 @@ const AddReviewModal = () => {
     }
   };
 
+  let customBlock = document.querySelector("#root");
+
+  const productId = customBlock.getAttribute("data-product_id");
+
+  
 
   const handleSubmit = (e) => {
     console.log("lll*/-", rating, review)
-
+    showLoader()
     // Specify the URL endpoint for your API
     const apiUrl = `https://${location.host}/apps/test/public/api/saveReview`;
 
@@ -37,6 +42,7 @@ const AddReviewModal = () => {
       review,
       customerId:ShopifyAnalytics.meta.page.customerId,
       rating,
+      productId,
       shop:Shopify.shop
     };
 
@@ -58,10 +64,17 @@ const AddReviewModal = () => {
       .then(data => {
         // Handle the data from the response
         console.log('Response data:', data);
+        hideAddReview()
+        hideLoader()
+        showToast("Review saved successfully.",false)
+        setRefresh(!refresh)
       })
       .catch(error => {
         // Handle any errors that occurred during the fetch
         console.error('Fetch error:', error);
+        hideAddReview()
+        hideLoader()
+        showToast("Something went wrong...",true)
       });
 
   }

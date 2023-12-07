@@ -2,19 +2,19 @@
 
 name = "product-reviews"
 client_id = "28217eb04b6fbc3ecc9564e3404bd6a5"
-application_url = "https://euros-isle-dna-singh.trycloudflare.com"
+application_url = "https://angel-identified-floor-tahoe.trycloudflare.com"
 embedded = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products,read_customers"
+scopes = "write_products,read_customers,write_customers"
 
 [auth]
 redirect_urls = [
-  "https://euros-isle-dna-singh.trycloudflare.com/auth/callback",
-  "https://euros-isle-dna-singh.trycloudflare.com/auth/shopify/callback",
-  "https://euros-isle-dna-singh.trycloudflare.com/api/auth/callback",
-  "https://euros-isle-dna-singh.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://angel-identified-floor-tahoe.trycloudflare.com/auth/callback",
+  "https://angel-identified-floor-tahoe.trycloudflare.com/auth/shopify/callback",
+  "https://angel-identified-floor-tahoe.trycloudflare.com/api/auth/callback",
+  "https://angel-identified-floor-tahoe.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]

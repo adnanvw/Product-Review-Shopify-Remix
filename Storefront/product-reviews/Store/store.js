@@ -6,6 +6,14 @@ const state = proxy({
     },
     seeReview:{
         open:false 
+    },
+    toast: {
+        open: false,
+        error: false,
+        message: ""
+    },
+    loader:{
+        open:false 
     }
 })
 
