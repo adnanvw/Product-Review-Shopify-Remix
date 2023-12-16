@@ -33,7 +33,8 @@ export const action = async ({ request }) => {
                         name: `${customerInfo.first_name} ${customerInfo.last_name}`,
                         productId: data.productId,
                         review: data.review,
-                        rating: data.rating
+                        rating: data.rating,
+                        customerId:data.customerId
                     }, { upsert: true, new: true })
                 }
                 return json({

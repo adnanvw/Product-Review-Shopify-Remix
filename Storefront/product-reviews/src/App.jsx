@@ -7,22 +7,24 @@ import ReviewModal from "../Components/ReviewModal"
 
 
 const App = () => {
-    
+
   const [refresh, setRefresh] = useState(false)
-  
-  
+
+  const [update, setUpdate] = useState(false)
+
   console.log("hello world***")
+
   return (
     <div className="App">
-      <ToastExample/>
-      <Circular/>
-      <AddReviewModal setRefresh={setRefresh} refresh={refresh}/>
-      <ReviewModal refresh={refresh}/>
+      <ToastExample />
+      <Circular />
+      {ShopifyAnalytics.meta.page.customerId && <AddReviewModal setRefresh={setRefresh} refresh={refresh} setUpdate={setUpdate} />}
+      <ReviewModal refresh={refresh} />
       <header className="App-header">
         <div>
-          <button type="button" className="btn btn-primary btn-lg me-2" onClick={showAddReview}>
-            Add Review123
-          </button>
+          {ShopifyAnalytics.meta.page.customerId && <button type="button" className="btn btn-primary btn-lg me-2" onClick={showAddReview}>
+            {!update ? "Add Review" : "Update Review"}
+          </button>}
           <button type="button" className="btn btn-success btn-lg" onClick={showSeeReview}>
             View Reviews
           </button>

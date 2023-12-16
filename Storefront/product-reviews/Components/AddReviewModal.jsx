@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSnapshot } from "valtio"
 import state from "../Store/store"
 import { hideAddReview, hideLoader, showLoader, showToast } from "../Store/utils"
 
-const AddReviewModal = ({setRefresh,refresh}) => {
+const AddReviewModal = ({ setRefresh, refresh, setUpdate }) => {
 
   const [rating, setRating] = useState(0);
 
   const [review, setReview] = useState("")
+
+  const [isUpdate, setIsUpdate] = useState(false)
 
   const snap = useSnapshot(state)
 
@@ -29,7 +31,7 @@ const AddReviewModal = ({setRefresh,refresh}) => {
 
   const productId = customBlock.getAttribute("data-product_id");
 
-  
+
 
   const handleSubmit = (e) => {
     console.log("lll*/-", rating, review)
@@ -40,10 +42,10 @@ const AddReviewModal = ({setRefresh,refresh}) => {
     // Create an object with the data you want to send in the request body
     const postData = {
       review,
-      customerId:ShopifyAnalytics.meta.page.customerId,
+      customerId: ShopifyAnalytics.meta.page.customerId,
       rating,
       productId,
-      shop:Shopify.shop
+      shop: Shopify.shop
     };
 
     // Use the fetch function to make a POST request
@@ -64,9 +66,12 @@ const AddReviewModal = ({setRefresh,refresh}) => {
       .then(data => {
         // Handle the data from the response
         console.log('Response data:', data);
+        setRating(0)
+        setReview("")
         hideAddReview()
         hideLoader()
-        showToast("Review saved successfully.",false)
+        showToast("Review saved successfully.", false)
+        getUserReview()
         setRefresh(!refresh)
       })
       .catch(error => {
@@ -74,10 +79,64 @@ const AddReviewModal = ({setRefresh,refresh}) => {
         console.error('Fetch error:', error);
         hideAddReview()
         hideLoader()
-        showToast("Something went wrong...",true)
+        showToast("Something went wrong...", true)
       });
 
   }
+
+
+  const getUserReview = () => {
+    showLoader()
+    // Specify the URL endpoint for your API
+    const apiUrl = `https://${location.host}/apps/test/public/api/getUserReview`;
+
+    // Create an object with the data you want to send in the request body
+    const postData = {
+      productId,
+      customerId: ShopifyAnalytics.meta.page.customerId
+    };
+
+    // Use the fetch function to make a POST request
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Specify the content type as JSON
+        // Add any other headers if required
+      },
+      body: JSON.stringify(postData), // Convert the data object to a JSON string
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // Parse the JSON response
+      })
+      .then(data => {
+        // Handle the data from the response
+        console.log('Response data:', data);
+        hideLoader()
+        if(data.reviewData){
+          console.log("enterr")
+          setRating(data.reviewData.rating)
+          setReview(data.reviewData.review)
+          setIsUpdate(true)
+          setUpdate(true)
+
+        }
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the fetch
+        console.error('Fetch error:', error);
+        hideLoader()
+        showToast("Something went wrong...", true)
+      });
+  }
+
+
+  useEffect(() => {
+    getUserReview()
+  }, [])
+
 
   return (
     <>
@@ -85,12 +144,12 @@ const AddReviewModal = ({setRefresh,refresh}) => {
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Add Review</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">{!isUpdate ? "Add Review" : "Update Review"}</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={hideAddReview}></button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Add Review</label>
+                <label for="exampleFormControlTextarea1" class="form-label">{!isUpdate ? "Add Review" : "Update Review"}</label>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value={review} onChange={handleReview}></textarea>
               </div>
               <div className="mb-3">
@@ -104,7 +163,7 @@ const AddReviewModal = ({setRefresh,refresh}) => {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={hideAddReview}>Close</button>
-              <button type="button" class="btn btn-primary" onClick={handleSubmit}>Add Review</button>
+              <button type="button" class="btn btn-primary" onClick={handleSubmit}>{!isUpdate ? "Add Review" : "Update Review"}</button>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 name = "product-reviews"
 client_id = "28217eb04b6fbc3ecc9564e3404bd6a5"
-application_url = "https://angel-identified-floor-tahoe.trycloudflare.com"
+application_url = "https://declare-assignments-new-brooks.trycloudflare.com"
 embedded = true
 
 [access_scopes]
@@ -11,10 +11,10 @@ scopes = "write_products,read_customers,write_customers"
 
 [auth]
 redirect_urls = [
-  "https://angel-identified-floor-tahoe.trycloudflare.com/auth/callback",
-  "https://angel-identified-floor-tahoe.trycloudflare.com/auth/shopify/callback",
-  "https://angel-identified-floor-tahoe.trycloudflare.com/api/auth/callback",
-  "https://angel-identified-floor-tahoe.trycloudflare.com/.shopify/graphiql/auth/callback"
+  "https://declare-assignments-new-brooks.trycloudflare.com/auth/callback",
+  "https://declare-assignments-new-brooks.trycloudflare.com/auth/shopify/callback",
+  "https://declare-assignments-new-brooks.trycloudflare.com/api/auth/callback",
+  "https://declare-assignments-new-brooks.trycloudflare.com/.shopify/graphiql/auth/callback"
 ]
 
 [webhooks]
