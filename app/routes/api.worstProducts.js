@@ -17,7 +17,7 @@ export const loader = async ({ request }) => {
                 },
             },
             {
-                $sort: { averageRating: -1 },
+                $sort: { averageRating: 1 },
             },
             {
                 $limit: 5,

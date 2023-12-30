@@ -1,45 +1,98 @@
 import { Page, LegacyCard, DataTable } from '@shopify/polaris';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Table from '../Components/Table';
+import { hideLoader, showLoader, showToast } from '../Store/utils';
+import Circular from '../Components/Circular';
+import ToastExample from '../Components/Toast';
+
 
 function DataTableExample() {
-  const rows = [
-    ['Emerald Silk Gown', '$875.00', 124689, 140, '$122,500.00'],
-    ['Mauve Cashmere Scarf', '$230.00', 124533, 83, '$19,090.00'],
-    [
-      'Navy Merino Wool Blazer with khaki chinos and yellow belt',
-      '$445.00',
-      124518,
-      32,
-      '$14,240.00',
-    ],
-  ];
+
+  const [topProducts, setTopProducts] = useState([])
+
+  const [worstProducts, setWorstProducts] = useState([])
 
 
-  
+  const getTopProducts = () => {
+    // Example GET request using Fetch
+    showLoader()
+    fetch('api/getTopProducts')
+      .then(response => {
+        // Check if the response status is OK (status code 200-299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response as JSON
+        return response.json();
+      })
+      .then(data => {
+        // Handle the JSON data here
+        console.log('Response:', data);
+        setTopProducts(data.finalArray)
+        hideLoader()
+        showToast("Products fetched successfully.", false)
+      })
+      .catch(error => {
+        // Handle errors here
+        console.error('Error:', error);
+        hideLoader()
+        showToast("Something went wrong...", true)
+      });
+
+  }
+
+
+  const getWorstProducts = () => {
+    // Example GET request using Fetch
+    showLoader()
+    fetch('api/worstProducts')
+      .then(response => {
+        // Check if the response status is OK (status code 200-299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse the response as JSON
+        return response.json();
+      })
+      .then(data => {
+        // Handle the JSON data here
+        console.log('Response:', data);
+        setWorstProducts(data.finalArray)
+        hideLoader()
+        showToast("Products fetched successfully.", false)
+      })
+      .catch(error => {
+        // Handle errors here
+        console.error('Error:', error);
+        hideLoader()
+        showToast("Something went wrong...", true)
+      });
+
+  }
+
+  useEffect(() => {
+    getTopProducts()
+    getWorstProducts()
+  }, [])
 
   return (
-    <Page title="Product-Reviews">
-      <LegacyCard>
-        <DataTable
-          columnContentTypes={[
-            'text',
-            'numeric',
-            'numeric',
-            'numeric',
-            'numeric',
-          ]}
-          headings={[
-            'Product',
-            'Price',
-            'SKU Number',
-            'Net quantity',
-            'Net sales',
-          ]}
-          rows={rows}
-          totals={['', '', '', 255, '$155,830.00']}
-        />
-      </LegacyCard>
-    </Page>
+    <>
+      <Circular />
+      <ToastExample />
+      <Page title="Products-Review-Rating">
+        <LegacyCard>
+          <div style={{ textAlign: "center", fontSize: "30px", fontWeight: "bold", padding: "22px", lineHeight: "32px" }}>Top Rated Products</div>
+          <Table topProducts={topProducts} />
+        </LegacyCard>
+        <LegacyCard>
+          <div style={{ textAlign: "center", fontSize: "30px", fontWeight: "bold", padding: "22px", lineHeight: "32px" }}>Low Rated Products</div>
+          <Table worstProducts={worstProducts} />
+
+        </LegacyCard>
+      </Page>
+    </>
   );
 }
 
